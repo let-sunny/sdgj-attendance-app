@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d7ea1acaafcfcdbad3d2005d8c06c09e",
+    "revision": "474445374dd909423c8af3c977bb17da",
     "url": "/sdgj-attendance-app/index.html"
   },
   {
