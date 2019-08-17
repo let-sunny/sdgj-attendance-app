@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import 'moment-lunar'
 moment.updateLocale('kr', {
 	weekdaysShort : ['일', '월', '화', '수', '목', '금', '토']
 });
@@ -49,6 +50,12 @@ class Calendar extends React.Component {
 		});
 	};
 
+	onSelect = (d) => {
+		this.setState({
+			selectedDay: d
+		});
+	};
+
 	isSunday = (d) => {
 		const { dateObject } = this.state;
 		const day = moment({
@@ -59,10 +66,42 @@ class Calendar extends React.Component {
 		return day === 0;
 	};
 
-	onSelect = (d) => {
-		this.setState({
-			selectedDay: d
+	isHoliday = (d) => {
+		const { dateObject } = this.state;
+		const holidays = [
+			// 신정
+			moment({ years: this.year(), months: 0, date: 1}),
+			// 설날
+			moment({ years: this.year(), months: 0, date: 1}).solar(),
+			moment({ years: this.year(), months: 0, date: 1}).subtract(1, 'day').solar(),
+			moment({ years: this.year(), months: 0, date: 1}).add(1, 'day').solar(),
+			// 3.1
+			moment({ years: this.year(), months: 2, date: 1}),
+			// 어린이날
+			moment({ years: this.year(), months: 4, date: 5}),
+			// 부처님 오신날
+			moment({ years: this.year(), months: 4, date: 12}),
+			// 현충일
+			moment({ years: this.year(), months: 5, date: 6}),
+			// 광복절
+			moment({ years: this.year(), months: 7, date: 15}),
+			// 추석
+			moment({ years: this.year(), months: 7, date: 15}).solar(),
+			moment({ years: this.year(), months: 7, date: 15}).subtract(1, 'day').solar(),
+			moment({ years: this.year(), months: 7, date: 15}).add(1, 'day').solar(),
+			// 개천절
+			moment({ years: this.year(), months: 9, date: 3}),
+			// 한글날
+			moment({ years: this.year(), months: 9, date: 9}),
+			// 크리스마스
+			moment({ years: this.year(), months: 11, date: 25}),
+		];
+		const day = moment({
+			years: dateObject.format('Y'),
+			months: Number(dateObject.format('MM'))-1,
+			date: d
 		});
+		return !!holidays.find((holiday) => holiday.isSame(day));
 	};
 
 	render() {
@@ -84,8 +123,7 @@ class Calendar extends React.Component {
 			// set class
 			const classes = ['calendar-day'];
 			if (Number(day) === Number(this.today())) classes.push('today');
-			if (this.isSunday(day)) classes.push('sunday');
-
+			if (this.isSunday(day) || this.isHoliday(day)) classes.push('holiday');
 			return (
 				<td key={day} className={classes.join(' ')}>
 					<button type="button"

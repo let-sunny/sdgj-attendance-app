@@ -90,12 +90,14 @@ button {
   text-align: left;
   vertical-align: top;
 }
-.calendar .calendar-body .calendar-table .calendar-day.sunday button {
+.calendar .calendar-body .calendar-table .calendar-day.holiday button {
   color: red;
+  font-weight: 600;
 }
 
 .calendar .calendar-body .calendar-table .calendar-day.today button {
   color: blue;
+  font-weight: 600;
 }
 
 .calendar .calendar-footer {
