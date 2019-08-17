@@ -1,8 +1,5 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
@@ -24,16 +21,18 @@ button {
 .calendar {
   width: 100%;
   max-width: 375px;
+  height: 530px;
 }
 
 .calendar .calendar-header {
   text-align: center;
-  padding-bottom: 15px;
+  font-family: "AvenirNext-Heavy", serif, -apple-system;
 }
 
 .calendar .calendar-header .calendar-nav .calendar-button {
   vertical-align: super;
-  font-size: 15px;
+  font-size: 25px;
+  font-weight: 600;
   padding: 10px;
   position: absolute;
 }
@@ -53,26 +52,61 @@ button {
 
 .calendar .calendar-header .calendar-label .calendar-label-month {
   padding: 0 10px;
-  font-size: 30px;
+  font-size: 46px;
+  height: 37px;
+  line-height: 100%;
+  font-weight: 900;
+  color: red;
 }
 
 .calendar .calendar-header .calendar-label .calendar-label-year {
-  font-size: 15px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .calendar .calendar-body {
-  min-height: 480px;
+  min-height: 445px;
 }
 
 .calendar .calendar-body .calendar-table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 .calendar .calendar-body .calendar-table .calendar-day {
   width: calc(100% / 7);
-  padding-bottom: calc(100% / 7);
+  padding-bottom: calc(100% / 25);
   position: relative;
   border: 1px outset black;
+}
+
+.calendar .calendar-body .calendar-table .calendar-week-day {
+  padding: 0;
+  height: 30px;
+}
+
+.calendar .calendar-body .calendar-table .calendar-week-day .en {
+  font-family: "AvenirNext-Bold", -apple-system, sans-serif;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.calendar .calendar-body .calendar-table .calendar-week-day .ch {
+  font-family: "PingFangTC-Semibold", -apple-system, sans-serif;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  position: relative;
+  top: 7px;
+}
+
+.calendar .calendar-body .calendar-table .calendar-week-day:first-child {
+  color: red;
+}
+
+.calendar .calendar-body .calendar-table .calendar-week-day:last-child {
+  color: blue;
 }
 
 .calendar .calendar-body .calendar-table .calendar-day.blank {
@@ -81,29 +115,53 @@ button {
 
 
 .calendar .calendar-body .calendar-table .calendar-day button {
+  font-family: "AvenirNext-Bold", serif, -apple-system;
   border-bottom: 1px solid black;
   padding: 2px;
-  height: 16px;
+  height: 44px;
   width: 100%;
-  line-height: 12px;
-  font-size: 12px;
-  text-align: left;
-  vertical-align: top;
+  line-height: 100%;
+  font-size: 30px;
+  font-weight: 800;
+  text-align: center;
 }
+
+.calendar .calendar-body .calendar-table .calendar-day.saturday button {
+  color: blue;
+}
+
+
 .calendar .calendar-body .calendar-table .calendar-day.holiday button {
   color: red;
-  font-weight: 600;
 }
 
 .calendar .calendar-body .calendar-table .calendar-day.today button {
-  color: blue;
-  font-weight: 600;
+  color: forestgreen;
 }
 
 .calendar .calendar-footer {
-  font-size: 10px;
+  font-family: -apple-system, sans-serif;
   text-align: center;
+  padding: 5px 0;
+  width: 100%;
   position: absolute;
-  right: 5px;
-  bottom: 5px;
+  bottom: 0;
+}
+
+.calendar .calendar-footer img {
+  width: 120px;
+  position: relative;
+  top: 5px;
+}
+
+.calendar .calendar-footer p.address {
+  font-size: 9px;
+  margin: 0 auto;
+}
+
+.calendar .calendar-footer p.copy-rights {
+  font-size: 6px;
+  width: 80px;
+  text-align: center;
+  margin: 0 auto;
 }
