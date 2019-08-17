@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import 'moment-lunar'
-import Logo from '../sdgj_horizontal_logo.png';
+import Logo from '../assets/images/sdgj_horizontal_logo.png';
 
 class Calendar extends React.Component {
 	state = {
