@@ -111,13 +111,14 @@ class Calendar extends React.Component {
 
 	isHoliday = (d) => {
 		const { dateObject } = this.state;
+		// TODO 대체 공휴일
 		const holidays = [
 			// 신정
 			moment({ years: this.year(), months: 0, date: 1}),
 			// 설날
 			moment({ years: this.year(), months: 0, date: 1}).solar(),
-			moment({ years: this.year(), months: 0, date: 1}).subtract(1, 'day').solar(),
-			moment({ years: this.year(), months: 0, date: 1}).add(1, 'day').solar(),
+			moment({ years: this.year(), months: 0, date: 1}).solar().subtract(1, 'day'),
+			moment({ years: this.year(), months: 0, date: 1}).solar().add(1, 'day'),
 			// 3.1
 			moment({ years: this.year(), months: 2, date: 1}),
 			// 어린이날
@@ -130,8 +131,8 @@ class Calendar extends React.Component {
 			moment({ years: this.year(), months: 7, date: 15}),
 			// 추석
 			moment({ years: this.year(), months: 7, date: 15}).solar(),
-			moment({ years: this.year(), months: 7, date: 15}).subtract(1, 'day').solar(),
-			moment({ years: this.year(), months: 7, date: 15}).add(1, 'day').solar(),
+			moment({ years: this.year(), months: 7, date: 15}).solar().subtract(1, 'day'),
+			moment({ years: this.year(), months: 7, date: 15}).solar().add(1, 'day'),
 			// 개천절
 			moment({ years: this.year(), months: 9, date: 3}),
 			// 한글날
