@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/sdgj-attendance-app/precache-manifest.9964f8a567c3de42f584aeb13f459e0f.js"
+  "/sdgj-attendance-app/precache-manifest.7438c9da784f85c7967a85d0cc9fcdd0.js"
 );
 
 self.addEventListener('message', (event) => {
