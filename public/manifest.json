@@ -1,6 +1,6 @@
 {
-  "short_name": "SDGJ",
-  "name": "SDGJ ATTENDANCE APP",
+  "short_name": "시대공작",
+  "name": "시대공작 출석",
   "icons": [
     {
       "src": "favicon.ico",
@@ -19,7 +19,7 @@
     }	    
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }
