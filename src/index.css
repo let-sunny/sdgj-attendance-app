@@ -5,9 +5,103 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+.calendar {
+  width: 100%;
+  max-width: 375px;
+}
+
+.calendar .calendar-header {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.calendar .calendar-header .calendar-nav .calendar-button {
+  vertical-align: super;
+  font-size: 15px;
+  padding: 10px;
+  position: absolute;
+}
+
+.calendar .calendar-header .calendar-nav .calendar-button.button-prev {
+  left: 50px;
+}
+
+.calendar .calendar-header .calendar-nav .calendar-button.button-next {
+  right: 50px;
+}
+
+.calendar .calendar-header .calendar-label {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.calendar .calendar-header .calendar-label .calendar-label-month {
+  padding: 0 10px;
+  font-size: 30px;
+}
+
+.calendar .calendar-header .calendar-label .calendar-label-year {
+  font-size: 15px;
+}
+
+.calendar .calendar-body {
+  min-height: 480px;
+}
+
+.calendar .calendar-body .calendar-table {
+  width: 100%;
+}
+
+.calendar .calendar-body .calendar-table .calendar-day {
+  width: calc(100% / 7);
+  padding-bottom: calc(100% / 7);
+  position: relative;
+  border: 1px outset black;
+}
+
+.calendar .calendar-body .calendar-table .calendar-day.blank {
+  border: none;
+}
+
+
+.calendar .calendar-body .calendar-table .calendar-day button {
+  border-bottom: 1px solid black;
+  padding: 2px;
+  height: 16px;
+  width: 100%;
+  line-height: 12px;
+  font-size: 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.calendar .calendar-body .calendar-table .calendar-day.sunday button {
+  color: red;
+}
+
+.calendar .calendar-body .calendar-table .calendar-day.today button {
+  color: blue;
+}
+
+.calendar .calendar-footer {
+  font-size: 10px;
+  text-align: center;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
