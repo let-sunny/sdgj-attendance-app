@@ -1,8 +1,13 @@
-body {
+*, *:after, *:before {
   margin: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  position: fixed;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
 }
 
 main {
@@ -11,11 +16,32 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 button {
   border: none;
   background: none;
+}
+
+header {
+  position: fixed;
+  right: 0;
+  text-align: right;
+}
+
+header button {
+  font-size: 10px;
+  padding: 2px 3px;
+  margin-right: 6px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+header p {
+  font-size: 10px;
+  padding: 6px 6px 0 0;
 }
 
 .calendar {
@@ -87,14 +113,12 @@ button {
 
 .calendar .calendar-body .calendar-table .calendar-week-day .en {
   font-family: "AvenirNext-Bold", -apple-system, sans-serif;
-  margin: 0;
   font-size: 12px;
   font-weight: 600;
 }
 
 .calendar .calendar-body .calendar-table .calendar-week-day .ch {
   font-family: "PingFangTC-Semibold", -apple-system, sans-serif;
-  margin: 0;
   font-size: 22px;
   font-weight: 900;
   position: relative;
@@ -113,7 +137,6 @@ button {
   border: none;
 }
 
-
 .calendar .calendar-body .calendar-table .calendar-day button {
   font-family: "AvenirNext-Bold", serif, -apple-system;
   border-bottom: 1px solid black;
@@ -130,7 +153,6 @@ button {
   color: blue;
 }
 
-
 .calendar .calendar-body .calendar-table .calendar-day.holiday button {
   color: red;
 }
@@ -144,7 +166,7 @@ button {
   text-align: center;
   padding: 5px 0;
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
 }

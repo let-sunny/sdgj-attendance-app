@@ -226,9 +226,7 @@ class Calendar extends React.Component {
 		});
 
 		return (
-			<div className="calendar"
-			     onTouchMove={(e) => this.onTouchMove(e)}
-			     onTouchEnd={() => this.onTouchEnd()}>
+			<div className="calendar">
 				<section className="calendar-header">
 					<div className="calendar-label">
 						<div className="calendar-label-month">{this.month().toUpperCase()}</div>
@@ -236,7 +234,9 @@ class Calendar extends React.Component {
 					</div>
 				</section>
 
-				<section className="calendar-body">
+				<section className="calendar-body"
+				         onTouchMove={(e) => this.onTouchMove(e)}
+				         onTouchEnd={() => this.onTouchEnd()} >
 					<table className="calendar-table">
 						<thead><tr>{weekdaysName}</tr></thead>
 						<tbody>{weeksInMonth}</tbody>
