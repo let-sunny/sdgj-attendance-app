@@ -1,16 +1,35 @@
 import React from 'react'
 
 class Header extends React.Component {
+	firebase = this.props.firebase;
 	state = {
 		user: null,
 		isFetching: true
 	};
 
 	async componentDidMount() {
-		await this.props.firebase.auth.onAuthStateChanged(this.user);
+		await this.firebase.auth.onAuthStateChanged(this.user);
 	};
 
-	user = (user) => {
+	setUser = async (account) => {
+		const userRef = this.firebase.db.collection('users').doc(account.email);
+		const user = await userRef.get();
+		if (!user.exists) {
+			await userRef.set({
+				createdAt: new Date().getTime(),
+				name: account.displayName || '',
+				isMember: false,
+				imageUrl: ''
+			});
+		} else {
+			await userRef.set({
+				lastSignedIn: new Date().getTime()
+			}, { merge: true });
+		}
+	};
+
+	user = async (user) => {
+		await this.setUser(user);
 		this.setState({
 			user,
 			isFetching: false
@@ -19,7 +38,7 @@ class Header extends React.Component {
 
 	signIn = async () => {
 		try {
-			await this.props.firebase.signIn();
+			await this.firebase.signIn();
 		} catch (e) {
 			console.log(e);
 		}
@@ -27,7 +46,7 @@ class Header extends React.Component {
 
 	signOut = async () => {
 		try {
-			await this.props.firebase.signOut();
+			await this.firebase.signOut();
 		} catch (e) {
 			console.log(e);
 		}
