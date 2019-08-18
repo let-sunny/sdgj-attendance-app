@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "81df73edc31efc9294962102a93f02f1",
+    "revision": "05927aee3083748ea301ce4ee9d38b56",
     "url": "/sdgj-attendance-app/index.html"
   },
   {
-    "revision": "d0943f0d4e58179f9a72",
-    "url": "/sdgj-attendance-app/static/css/main.d59b9185.chunk.css"
+    "revision": "510a2c7ba940f57b446f",
+    "url": "/sdgj-attendance-app/static/css/main.6a3c8748.chunk.css"
   },
   {
     "revision": "0fe37ca793991ea40362",
     "url": "/sdgj-attendance-app/static/js/2.1496467e.chunk.js"
   },
   {
-    "revision": "d0943f0d4e58179f9a72",
+    "revision": "510a2c7ba940f57b446f",
     "url": "/sdgj-attendance-app/static/js/main.a30c2d28.chunk.js"
   },
   {
