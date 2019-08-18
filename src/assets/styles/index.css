@@ -48,6 +48,9 @@ header p {
   width: 100%;
   max-width: 375px;
   height: 530px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .calendar .calendar-header {
