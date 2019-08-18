@@ -12,7 +12,7 @@ function App() {
                         <Header firebase={ firebase }/>
                     </header>
                     <main>
-                        <Calendar />
+                        <Calendar firebase={ firebase } />
                     </main>
                 </div>
             }

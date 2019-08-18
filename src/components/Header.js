@@ -1,4 +1,5 @@
 import React from 'react'
+import User from '../functions/User';
 
 class Header extends React.Component {
 	firebase = this.props.firebase;
@@ -11,25 +12,8 @@ class Header extends React.Component {
 		await this.firebase.auth.onAuthStateChanged(this.user);
 	};
 
-	setUser = async (account) => {
-		const userRef = this.firebase.db.collection('users').doc(account.email);
-		const user = await userRef.get();
-		if (!user.exists) {
-			await userRef.set({
-				createdAt: new Date().getTime(),
-				name: account.displayName || '',
-				isMember: false,
-				imageUrl: ''
-			});
-		} else {
-			await userRef.set({
-				lastSignedIn: new Date().getTime()
-			}, { merge: true });
-		}
-	};
-
 	user = async (user) => {
-		await this.setUser(user);
+		await new User(this.firebase).setUser(user);
 		this.setState({
 			user,
 			isFetching: false
@@ -54,7 +38,7 @@ class Header extends React.Component {
 
 	render() {
 		if (this.state.isFetching) {
-			return (<div>...</div>);
+			return (<div><p>...</p></div>);
 		} else if (this.state.user) {
 			return (
 				<div>

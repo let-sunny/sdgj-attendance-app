@@ -2,17 +2,26 @@ import React from 'react'
 import moment from 'moment'
 import 'moment-lunar'
 import Logo from '../assets/images/sdgj_horizontal_logo.png';
+import Attendance from '../functions/Attendance';
+import User from '../functions/User';
 
 class Calendar extends React.Component {
+	firebase = this.props.firebase;
+
 	state = {
 		dateObject: moment(),
-		selectedDay: null,
-		touched: false,
 		startX: null,
-		currentX: null
+		key: 0
 	};
 
 	weekdayShort = moment.weekdaysShort();
+
+	async componentDidMount() {
+		const attendances = await Promise.all(this.daysInMonth().map((day) => this.attendances(day)));
+		this.setState({
+			attendances
+		});
+	}
 
 	firstDayOfMonth = () => {
 		const { dateObject } = this.state;
@@ -21,8 +30,8 @@ class Calendar extends React.Component {
 			.format('d');
 	};
 
-	daysInMonth = () => {
-		return this.state.dateObject.daysInMonth();
+	daysInMonth = (dateObject = this.state.dateObject) => {
+		return new Array(dateObject.daysInMonth()).fill(0).map((num, i) => i + 1);
 	};
 
 	month = () => {
@@ -33,47 +42,58 @@ class Calendar extends React.Component {
 		return this.state.dateObject.format('Y');
 	};
 
-	onPrev = () => {
+	onPrev = async () => {
+		const dateObject = this.state.dateObject.subtract(1, 'month');
+		const attendances = await Promise.all(this.daysInMonth(dateObject).map((day) => this.attendances(day)));
 		this.setState({
-			dateObject: this.state.dateObject.subtract(1, 'month'),
-			selectedDay: null
+			dateObject: dateObject,
+			attendances
 		});
 	};
 
-	onNext = () => {
+	onNext = async () => {
+		const dateObject = this.state.dateObject.add(1, 'month');
+		const attendances = await Promise.all(this.daysInMonth(dateObject).map((day) => this.attendances(day)));
 		this.setState({
-			dateObject: this.state.dateObject.add(1, 'month'),
-			selectedDay: null
+			dateObject: dateObject,
+			attendances
 		});
 	};
 
-	onSelect = (d) => {
-		this.setState({
-			selectedDay: d
-		});
-	};
+	onAttend = async (d) => {
+		const account = await this.firebase.auth.currentUser;
+		const user = await new User(this.firebase).getUser(account);
 
-	onTouchMove = (e) => {
-		if (this.state.touched) {
-			this.setState({
-				currentX: e.targetTouches[0].clientX
-			});
+		if (!account || !user || !user.isMember) {
+			alert('정체를 밝혀라 !');
 		} else {
+			const { dateObject } = this.state;
+			const date = moment({
+				years: dateObject.format('Y'),
+				months: Number(dateObject.format('MM'))-1,
+				date: d
+			}).format('YYYYMMDD');
+			await new Attendance(this.firebase).setAttendance(date, account);
+			const attendances = await Promise.all(this.daysInMonth().map((day) => this.attendances(day)));
 			this.setState({
-				startX: e.targetTouches[0].clientX,
-				touched: true
+				attendances
 			});
 		}
 	};
 
-	onTouchEnd = () => {
-		const { currentX, startX } = this.state;
+	onTouchStart = (e) => {
+		this.setState({
+			startX: e.targetTouches[0].clientX
+		});
+	};
+
+	onTouchEnd = (e) => {
+		const { startX } = this.state;
+		const currentX = e.changedTouches[0].clientX;
 		if (Math.abs(currentX - startX ) > 130) {
 			currentX - startX > 0 ? this.onPrev() : this.onNext();
 		}
 		this.setState({
-			touched: false,
-			currentX: null,
 			startX: null
 		});
 	};
@@ -148,6 +168,19 @@ class Calendar extends React.Component {
 		return !!holidays.find((holiday) => holiday.isSame(day));
 	};
 
+	attendances = async (d) => {
+		const { dateObject } = this.state;
+		const date = moment({
+			years: dateObject.format('Y'),
+			months: Number(dateObject.format('MM'))-1,
+			date: d
+		}).format('YYYYMMDD');
+		const attendances = await new Attendance(this.firebase).getAttendances(date);
+		return {
+			[date]: attendances
+		};
+	};
+
 	render() {
 		let weekdaysName = this.weekdayShort.map((day, i) => {
 			let chineseWeekday = '';
@@ -190,18 +223,31 @@ class Calendar extends React.Component {
 			);
 		});
 
-		const daysInMonth = new Array(this.daysInMonth()).fill(0).map((num, i) => {
-			const day = i + 1;
-
+		const daysInMonth = this.daysInMonth().map(day => {
 			// set class
 			const classes = ['calendar-day'];
 			if (this.isToday(day)) classes.push('today');
 			if (this.isSunday(day) || this.isHoliday(day)) classes.push('holiday');
 			if (this.isSaturday(day)) classes.push('saturday');
+			const date = moment({
+				years: this.state.dateObject.format('Y'),
+				months: Number(this.state.dateObject.format('MM'))-1,
+				date: day
+			}).format('YYYYMMDD');
+			let todayAttendance = this.state.attendances && this.state.attendances.find(attendance => attendance[date]);
+			todayAttendance = todayAttendance && todayAttendance[date].map(attendance => {
+				return (<button className="attendance" key={attendance}>출</button>);
+			});
 			return (
 				<td key={day} className={classes.join(' ')}>
-					<button type="button"
-					        name={day} onClick={() => this.onSelect(day)}>{day}</button>
+					<button type="button" className="btn-attend "
+					        name={day} onClick={() => this.onAttend(day)}>{day}</button>
+					<div className="attendance-area">
+						{todayAttendance}
+					{/*	<button className="attendance">준</button>*/}
+					{/*	<button className="attendance">수</button>*/}
+					{/*	<button className="attendance">환</button>*/}
+					</div>
 				</td>
 			);
 		});
@@ -235,8 +281,8 @@ class Calendar extends React.Component {
 				</section>
 
 				<section className="calendar-body"
-				         onTouchMove={(e) => this.onTouchMove(e)}
-				         onTouchEnd={() => this.onTouchEnd()} >
+				         onTouchStart={(e) => this.onTouchStart(e)}
+				         onTouchEnd={(e) => this.onTouchEnd(e)} >
 					<table className="calendar-table">
 						<thead><tr>{weekdaysName}</tr></thead>
 						<tbody>{weeksInMonth}</tbody>
