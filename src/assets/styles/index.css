@@ -20,9 +20,10 @@ main {
   overflow: hidden;
 }
 
-button {
+button, button:disabled {
   border: none;
   background: none;
+  color: black;
 }
 
 header {

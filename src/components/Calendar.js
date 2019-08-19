@@ -18,8 +18,10 @@ class Calendar extends React.Component {
 
 	async componentDidMount() {
 		const attendances = await Promise.all(this.daysInMonth().map((day) => this.attendances(day)));
+		const account = await this.firebase.auth.currentUser;
 		this.setState({
-			attendances
+			attendances,
+			account
 		});
 	}
 
@@ -61,7 +63,7 @@ class Calendar extends React.Component {
 	};
 
 	onAttend = async (d) => {
-		const account = await this.firebase.auth.currentUser;
+		const account = this.state.account;
 		const user = await new User(this.firebase).getUser(account);
 		if (!account || !user || !user.isMember) {
 			alert('정체를 밝혀라 !');
@@ -237,13 +239,15 @@ class Calendar extends React.Component {
 				date: day
 			}).format('YYYYMMDD');
 			let dayAttendances = this.state.attendances && this.state.attendances.find(attendance => attendance[date]);
+			let isAttended = false;
 			dayAttendances = dayAttendances && dayAttendances[date].map(attendance => {
+				if (!isAttended) isAttended = attendance.email === (this.state.account && this.state.account.email);
 				return (<button className="attendance" key={attendance}>{(attendance.name && attendance.name.slice(0, 1)) || '출'}</button>);
 			});
 			return (
 				<td key={day} className={classes.join(' ')}>
 					<button type="button" className="btn-attend "
-					        name={day} onClick={() => this.onAttend(day)}>{day}</button>
+					        name={day} onClick={() => this.onAttend(day)} disabled={isAttended}>{day}</button>
 					<div className="attendance-area">
 						{dayAttendances}
 					</div>
