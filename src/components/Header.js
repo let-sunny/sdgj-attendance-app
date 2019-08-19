@@ -42,7 +42,11 @@ class Header extends React.Component {
 		} else if (this.state.user) {
 			return (
 				<div>
-					<p>{this.state.user.email || this.state.user.phoneNumber}</p>
+					{
+						this.state.user.photoURL
+							? (<img src={this.state.user.photoURL} alt={this.state.user.email} />)
+							: (<p>{this.state.user.email || this.state.user.phoneNumber}</p>)
+					}
 					{/*<button onClick={() => this.signOut()}>나가기</button>*/}
 				</div>
 			);

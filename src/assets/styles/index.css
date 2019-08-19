@@ -46,6 +46,14 @@ header p {
   color: lightgray;
 }
 
+header img {
+  width: 17px;
+  height: 17px;
+  border-radius: 100%;
+  padding: 2px;
+  object-fit: cover;
+}
+
 .calendar {
   width: 100%;
   max-width: 375px;
