@@ -63,17 +63,19 @@ class Calendar extends React.Component {
 	onAttend = async (d) => {
 		const account = await this.firebase.auth.currentUser;
 		const user = await new User(this.firebase).getUser(account);
-
 		if (!account || !user || !user.isMember) {
 			alert('정체를 밝혀라 !');
 		} else {
+			const isConfirmed = window.confirm('진짜 출석 했어 ?');
+			if (!isConfirmed) return;
+
 			const { dateObject } = this.state;
 			const date = moment({
 				years: dateObject.format('Y'),
 				months: Number(dateObject.format('MM'))-1,
 				date: d
 			}).format('YYYYMMDD');
-			await new Attendance(this.firebase).setAttendance(date, account);
+			await new Attendance(this.firebase).setAttendance(date, user);
 			const attendances = await Promise.all(this.daysInMonth().map((day) => this.attendances(day)));
 			this.setState({
 				attendances
@@ -234,19 +236,16 @@ class Calendar extends React.Component {
 				months: Number(this.state.dateObject.format('MM'))-1,
 				date: day
 			}).format('YYYYMMDD');
-			let todayAttendance = this.state.attendances && this.state.attendances.find(attendance => attendance[date]);
-			todayAttendance = todayAttendance && todayAttendance[date].map(attendance => {
-				return (<button className="attendance" key={attendance}>출</button>);
+			let dayAttendances = this.state.attendances && this.state.attendances.find(attendance => attendance[date]);
+			dayAttendances = dayAttendances && dayAttendances[date].map(attendance => {
+				return (<button className="attendance" key={attendance}>{(attendance.name && attendance.name.slice(0, 1)) || '출'}</button>);
 			});
 			return (
 				<td key={day} className={classes.join(' ')}>
 					<button type="button" className="btn-attend "
 					        name={day} onClick={() => this.onAttend(day)}>{day}</button>
 					<div className="attendance-area">
-						{todayAttendance}
-					{/*	<button className="attendance">준</button>*/}
-					{/*	<button className="attendance">수</button>*/}
-					{/*	<button className="attendance">환</button>*/}
+						{dayAttendances}
 					</div>
 				</td>
 			);

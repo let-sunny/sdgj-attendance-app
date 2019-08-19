@@ -108,6 +108,7 @@ header p {
   width: calc(100% / 7);
   position: relative;
   border: 1px outset black;
+  overflow: hidden;
 }
 
 .calendar .calendar-body .calendar-table .calendar-week-day {

@@ -13,14 +13,17 @@ class Attendance {
 			if (!attendance.exists) {
 				await attendanceMemberRef.set({
 					createdAt: new Date().getTime(),
+					name: user.name,
 					isDeleted: false
 				});
-			} else {
-				await attendanceMemberRef.set({
-					isDeleted: !attendance.data().isDeleted,
-					updatedAt: new Date().getTime()
-				}, { merge: true });
 			}
+			// 삭제 기능은 일단 보류
+			// else {
+			// 	await attendanceMemberRef.set({
+			// 		isDeleted: !attendance.data().isDeleted,
+			// 		updatedAt: new Date().getTime()
+			// 	}, { merge: true });
+			// }
 		} catch (e) {
 			console.log(e);
 		}

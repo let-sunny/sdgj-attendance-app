@@ -12,12 +12,15 @@ class User {
 			if (!user.exists) {
 				return null;
 			} else {
-				return user.data();
+				return {
+					email: user.id,
+					...user.data()
+				};
 			}
 		} catch (e) {
 			console.log(e);
 		}
-	}
+	};
 
 	setUser = async (account) => {
 		if (!account) return;
