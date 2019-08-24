@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/sdgj-attendance-app/static/css/main.f84b7746.chunk.css",
-    "main.js": "/sdgj-attendance-app/static/js/main.585f8177.chunk.js",
-    "main.js.map": "/sdgj-attendance-app/static/js/main.585f8177.chunk.js.map",
+    "main.js": "/sdgj-attendance-app/static/js/main.ff15e176.chunk.js",
+    "main.js.map": "/sdgj-attendance-app/static/js/main.ff15e176.chunk.js.map",
     "runtime~main.js": "/sdgj-attendance-app/static/js/runtime~main.7e3bbb56.js",
     "runtime~main.js.map": "/sdgj-attendance-app/static/js/runtime~main.7e3bbb56.js.map",
-    "static/js/2.a17ca00e.chunk.js": "/sdgj-attendance-app/static/js/2.a17ca00e.chunk.js",
-    "static/js/2.a17ca00e.chunk.js.map": "/sdgj-attendance-app/static/js/2.a17ca00e.chunk.js.map",
+    "static/js/2.13fb0737.chunk.js": "/sdgj-attendance-app/static/js/2.13fb0737.chunk.js",
+    "static/js/2.13fb0737.chunk.js.map": "/sdgj-attendance-app/static/js/2.13fb0737.chunk.js.map",
     "index.html": "/sdgj-attendance-app/index.html",
-    "precache-manifest.aec449ab388d1546bca6dc2088dba7cb.js": "/sdgj-attendance-app/precache-manifest.aec449ab388d1546bca6dc2088dba7cb.js",
+    "precache-manifest.7bce68739edf13553b3765e917fffd4d.js": "/sdgj-attendance-app/precache-manifest.7bce68739edf13553b3765e917fffd4d.js",
     "service-worker.js": "/sdgj-attendance-app/service-worker.js",
     "static/css/main.f84b7746.chunk.css.map": "/sdgj-attendance-app/static/css/main.f84b7746.chunk.css.map",
     "static/media/sdgj_horizontal_logo.png": "/sdgj-attendance-app/static/media/sdgj_horizontal_logo.79e03f6f.png"
