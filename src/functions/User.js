@@ -5,10 +5,9 @@ class User {
 
 	getUser = async (account) => {
 		if (!account) return;
-
-		const userRef = this.firebase.db.collection('users').doc(account.email);
-		const user = await userRef.get();
 		try {
+			const userRef = this.firebase.db.collection('users').doc(account.email);
+			const user = await userRef.get();
 			if (!user.exists) {
 				return null;
 			} else {
@@ -24,10 +23,9 @@ class User {
 
 	setUser = async (account) => {
 		if (!account) return;
-
-		const userRef = this.firebase.db.collection('users').doc(account.email);
-		const user = await userRef.get();
 		try {
+			const userRef = this.firebase.db.collection('users').doc(account.email);
+			const user = await userRef.get();
 			if (!user.exists) {
 				await userRef.set({
 					createdAt: new Date().getTime(),

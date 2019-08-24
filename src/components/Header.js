@@ -13,7 +13,7 @@ class Header extends React.Component {
 	};
 
 	user = async (user) => {
-		await new User(this.firebase).setUser(user);
+		if (user) await new User(this.firebase).setUser(user);
 		this.setState({
 			user,
 			isFetching: false
