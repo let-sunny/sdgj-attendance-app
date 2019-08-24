@@ -32,7 +32,7 @@ class Attendance {
 		try {
 			const attendanceMemberRef = this.firebase.db
 				.collection('attendances').doc(date)
-				.collection('members').where("isDeleted", "==", false).orderBy('createdAt');
+				.collection('members').where('isDeleted', '==', false).orderBy('createdAt');
 			const querySnapshot = await attendanceMemberRef.get();
 			if (!querySnapshot.empty) {
 				const { docs } = querySnapshot;

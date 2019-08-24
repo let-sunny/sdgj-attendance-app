@@ -2,8 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import 'moment-lunar'
 import Logo from '../assets/images/sdgj_horizontal_logo.png';
-import Attendance from '../functions/Attendance';
-import User from '../functions/User';
+import Attendance from '../actions/Attendance';
+import User from '../actions/User';
 
 class Calendar extends React.Component {
 	firebase = this.props.firebase;

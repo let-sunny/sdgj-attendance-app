@@ -31,11 +31,13 @@ class User {
 					createdAt: new Date().getTime(),
 					name: account.displayName || '',
 					isMember: false,
-					imageUrl: account.photoURL || ''
+					imageUrl: account.photoURL || '',
+					deviceToken: account.deviceToken || ''
 				});
 			} else {
 				await userRef.set({
-					lastSignedIn: new Date().getTime()
+					lastSignedIn: new Date().getTime(),
+					deviceToken: account.deviceToken || user.data().deviceToken
 				}, { merge: true });
 			}
 		} catch (e) {

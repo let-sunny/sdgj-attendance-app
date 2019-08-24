@@ -1,5 +1,5 @@
 import React from 'react'
-import User from '../functions/User';
+import User from '../actions/User';
 
 class Header extends React.Component {
 	firebase = this.props.firebase;
@@ -10,10 +10,30 @@ class Header extends React.Component {
 
 	async componentDidMount() {
 		await this.firebase.auth.onAuthStateChanged(this.user);
+		if (this.firebase.messaging) {
+			await this.firebase.messaging.onTokenRefresh(this.getToken);
+			await this.getToken();
+			this.requestPermission();
+		}
 	};
 
+	getToken = async () => {
+		try {
+			const currentToken = await this.firebase.messaging.getToken();
+			if (currentToken) {
+				this.setState({ deviceToken: currentToken });
+			} else {
+				console.log('No Instance ID token available. Request permission to generate one.');
+			}
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	setUser = async (user) => await new User(this.firebase).setUser(user);
+
 	user = async (user) => {
-		if (user) await new User(this.firebase).setUser(user);
+		if (user) await this.setUser({ ...user, deviceToken: this.state.deviceToken });
 		this.setState({
 			user,
 			isFetching: false
@@ -34,6 +54,17 @@ class Header extends React.Component {
 		} catch (e) {
 			console.log(e);
 		}
+	};
+
+	requestPermission = () => {
+		console.log('Requesting permission...');
+		Notification.requestPermission().then((permission) => {
+			if (permission === 'granted') {
+				console.log('Notification permission granted.');
+			} else {
+				console.log('Unable to get permission to notify.');
+			}
+		});
 	};
 
 	render() {

@@ -7,6 +7,15 @@ import * as serviceWorker from './serviceWorker';
 import Firebase from './firebase'
 import FirebaseContext from './context/FirebaseContext'
 
+if ('serviceWorker' in navigator) {
+	navigator.serviceWorker.register('../firebase-messaging-sw.js')
+		.then(function(registration) {
+			console.log('Registration successful, scope is:', registration.scope);
+		}).catch(function(err) {
+		console.log('Service worker registration failed, error:', err);
+	});
+}
+
 ReactDOM.render(
 	<FirebaseContext.Provider value={new Firebase()}>
 		<App />
