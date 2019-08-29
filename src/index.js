@@ -16,8 +16,11 @@ if ('serviceWorker' in navigator) {
 	});
 }
 
+const firebase = new Firebase();
+firebase.enablePersistenceDB();
+
 ReactDOM.render(
-	<FirebaseContext.Provider value={new Firebase()}>
+	<FirebaseContext.Provider value={firebase}>
 		<App />
 	</FirebaseContext.Provider>, document.getElementById('root'));
 

@@ -19,6 +19,8 @@ class Firebase {
 		this.googleProvider = new app.auth.GoogleAuthProvider();
 	}
 
+	enablePersistenceDB = () => this.db.enablePersistence();
+
 	signIn = () => this.auth.signInWithRedirect(this.googleProvider);
 
 	signOut = () => this.auth.signOut();
